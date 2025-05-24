@@ -17,24 +17,33 @@ public class GameService {
     @Autowired
     private GameRepository gameRepository;
 
-    @Transactional(readOnly = true)
+    public GameService() {
+    }
+
+    @Transactional(
+            readOnly = true
+    )
     public GameDTO findById(Long id) {
-        Game result = gameRepository.findById(id).get();
+        Game result = (Game)this.gameRepository.findById(id).get();
         GameDTO dto = new GameDTO(result);
         return dto;
-
     }
-    @Transactional(readOnly = true)
+
+    @Transactional(
+            readOnly = true
+    )
     public List<GameMinDTO> findAll() {
-        List<Game> result = gameRepository.findAll();
-        List<GameMinDTO> dto = result.stream().map(x -> new GameMinDTO(x)).toList();
+        List<Game> result = this.gameRepository.findAll();
+        List<GameMinDTO> dto = result.stream().map((x) -> new GameMinDTO(x)).toList();
         return dto;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(
+            readOnly = true
+    )
     public List<GameMinDTO> findByList(Long listId) {
-        List<GameMinProjection> result = gameRepository.searchByList(listId);
-        List<GameMinDTO> dto = result.stream().map(x -> new GameMinDTO(x)).toList();
+        List<GameMinProjection> result = this.gameRepository.searchByList(listId);
+        List<GameMinDTO> dto = result.stream().map((x) -> new GameMinDTO(x)).toList();
         return dto;
     }
 

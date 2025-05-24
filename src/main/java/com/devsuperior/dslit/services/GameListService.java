@@ -19,12 +19,15 @@ public class GameListService {
     @Autowired
     private GameListRepository gameListRepository;
 
+    public GameListService() {
+    }
 
-
-    @Transactional(readOnly = true)
+    @Transactional(
+            readOnly = true
+    )
     public List<GameListDTO> findAll() {
-        List<GameList> result = gameListRepository.findAll();
-        List<GameListDTO> dto = result.stream().map(x -> new GameListDTO(x)).toList();
+        List<GameList> result = this.gameListRepository.findAll();
+        List<GameListDTO> dto = result.stream().map((x) -> new GameListDTO(x)).toList();
         return dto;
     }
 
