@@ -9,8 +9,9 @@ O projeto foi desenvolvido com as seguintes tecnologias:
 - Spring Boot: Framework para desenvolvimento de aplicações Java.
 - JPA / Hibernate: Para persistência de dados e mapeamento objeto-relacional.
 - Maven: Ferramenta de automação de build e gerenciamento de dependências.
-- Docker: Para hospedar o banco
-- Postgres: O banco de dados usado dentro do docker
+- Docker: Utilizado para hospedar o banco de dados, facilitando a configuração do ambiente.
+- Postgres: O banco de dados relacional usado dentro do contêiner Docker para armazenar as informações dos jogos e listas.
+
 ### Como Rodar o Projeto
 
 ## Funcionalidades
@@ -39,6 +40,61 @@ Corpo da Requisição (Body): ReplacementDTO contendo informações da posição
   ```bash
     cd dslist
   ```
+### Configurar e Iniciar o Banco de Dados com Docker:
+ - Crie um arquivo docker-compose.yml (ou configure diretamente via comandos Docker) para o PostgreSQL, garantindo que as variáveis de ambiente (usuário, senha, nome do banco) correspondam às configurações do seu application.properties no Spring Boot.
+ - Exemplo de docker-compose.yml:
+```YAML
+  services:
+  # ====================================================================================================================
+  # POSTGRES SERVER
+  # ====================================================================================================================
+  pg-docker:
+    image: postgres:14-alpine
+    container_name: dev-postgresql
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: your_user
+      POSTGRES_PASSWORD: your_password
+    ports:
+      - 5433:5432
+    volumes:
+      - ./.data/postgresql/data:/var/lib/postgresql/data
+    networks:
+      - dev-network
+  # ====================================================================================================================
+  # PGADMIN
+  # ====================================================================================================================
+  pgadmin-docker:
+    image: dpage/pgadmin4
+    container_name: dev-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: me@example.com
+      PGADMIN_DEFAULT_PASSWORD: your_password
+    ports:
+      - 5050:80
+    volumes:
+      - ./.data/pgadmin:/var/lib/pgadmin
+    depends_on:
+      - pg-docker
+    networks:
+      - dev-network
+# ======================================================================================================================
+# REDE
+# ======================================================================================================================
+networks:
+  dev-network:
+    driver: bridge
+
+```
+
+Lembre-se de substituir your_user e your_password pelas suas credenciais.
+
+- Inicie o contêiner Docker:
+  
+```
+  docker-compose up -d
+```
+
 
 ### Compilar e Rodar o Projeto
   ```bash
