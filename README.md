@@ -13,6 +13,21 @@ O projeto foi desenvolvido com as seguintes tecnologias:
 - Postgres: O banco de dados usado dentro do docker
 ### Como Rodar o Projeto
 
+## Funcionalidades
+### API Endpoints
+A API oferece os seguintes endpoints:
+```
+GET /games  - Listagem de Jogos Cadastrados:
+GET /games/{id}  Buscar Jogo por ID , (onde {id} é o ID do jogo)
+GET /lists Listagem das Listas de Jogos Cadastradas
+GET /lists/{id}/games  Buscar Listagem de Jogos por ID da Lista ,  (onde {id} é o ID da lista)
+POST /lists/{id}/replacement Mudar a Posição do Jogo dentro de uma Lista de Jogos  (onde {id} é o ID da lista)
+Corpo da Requisição (Body): ReplacementDTO contendo informações da posição de origem e destino.
+
+
+```
+
+
 ### Pré-requisitos: Certifique-se de ter o Java Development Kit (JDK) 17 ou superior e o Maven instalados em sua máquina.
 
 ### Clonar o Repositório
