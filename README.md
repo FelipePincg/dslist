@@ -40,7 +40,7 @@ Corpo da Requisição (Body): ReplacementDTO contendo informações da posição
     cd dslist
   ```
 
-### Compilar e Rodar o Projeto:
+### Compilar e Rodar o Projeto
   ```bash
     ./mvnw spring-boot:run
   ```
